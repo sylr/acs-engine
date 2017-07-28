@@ -101,6 +101,8 @@
     "subnetName": "[split(parameters('masterVnetSubnetID'), '/')[variables('subnetNameResourceSegmentIndex')]]",
     "vnetNameResourceSegmentIndex": 8,
     "virtualNetworkName": "[split(parameters('masterVnetSubnetID'), '/')[variables('vnetNameResourceSegmentIndex')]]",
+    "vnetResourceGroupNameResourceSegmentIndex": 4,
+    "virtualNetworkResourceGroupName": "[split(parameters('masterVnetSubnetID'), '/')[variables('vnetResourceGroupNameResourceSegmentIndex')]]",
 {{else}}
     "subnet": "[parameters('masterSubnet')]",
     "subnetName": "[concat(variables('orchestratorName'), '-subnet')]",
@@ -108,6 +110,7 @@
     "vnetSubnetID": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
     "virtualNetworkName": "[concat(variables('orchestratorName'), '-vnet-', variables('nameSuffix'))]",
     "vnetCidr": "10.0.0.0/8",
+    "virtualNetworkResourceGroupName": "",
 {{end}}
     "kubeDnsServiceIp": "10.0.0.10",
     "kubeServiceCidr": "10.0.0.0/16",
