@@ -371,6 +371,8 @@ type AADProfile struct {
 	ClientAppID string `json:"clientAppID,omitempty"`
 	// The server AAD application ID.
 	ServerAppID string `json:"serverAppID,omitempty"`
+	// The OIDC Username claim
+	UsernameClaim string `json:"usernameClaim,omitempty"`
 	// The AAD tenant ID to use for authentication.
 	// If not specified, will use the tenant of the deployment subscription.
 	// Optional

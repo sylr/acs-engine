@@ -12,6 +12,12 @@
       },
       "type": "string"
     },
+    "aadUsernameClaim": {
+      "metadata": {
+        "description": "The OIDC username claim"
+      },
+      "type": "string"
+    },
 {{end}}
     "apiServerCertificate": {
       "metadata": {

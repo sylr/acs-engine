@@ -34,7 +34,7 @@ spec:
         - "--service-account-key-file=/etc/kubernetes/certs/apiserver.key"
         - "--oidc-client-id="
         - "--oidc-issuer-url="
-        - "--oidc-username-claim=oid"
+        - "--oidc-username-claim="
         - "--storage-backend=<etcdApiVersion>"
         - "--v=4"
         - "<kubernetesEnableRbac>"

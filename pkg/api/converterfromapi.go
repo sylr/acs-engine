@@ -969,4 +969,5 @@ func convertAADProfileToVLabs(api *AADProfile, vlabs *vlabs.AADProfile) {
 	vlabs.ClientAppID = api.ClientAppID
 	vlabs.ServerAppID = api.ServerAppID
 	vlabs.TenantID = api.TenantID
+	vlabs.UsernameClaim = api.UsernameClaim
 }

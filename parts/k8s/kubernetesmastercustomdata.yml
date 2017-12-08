@@ -295,6 +295,8 @@ write_files:
 
 {{ if .HasAadProfile }}
     OIDC_CLIENT_ID=spn:{{WrapAsVariable "aadServerAppId"}}
+    VAR_OIDC_USERNAME_CLAIM={{WrapAsVariable "aadUsernameClaim"}}
+    OIDC_USERNAME_CLAIM=${VAR_OIDC_USERNAME_CLAIM:-"oid"}
     VAR_AAD_TENANT_ID={{WrapAsVariable "aadTenantId"}}
     VAR_TENANT_ID={{WrapAsVariable "tenantId"}}
     VAR_TARGET_ENV={{WrapAsVariable "targetEnvironment"}}
@@ -305,7 +307,7 @@ write_files:
     fi
 
     OIDC_ISSUER_URL="https://$AAD_ISSUER_HOST/$AAD_TENANT_ID/"
-    perl -pi -e "s|--oidc-client-id=\K(?=\")|$OIDC_CLIENT_ID| || s|--oidc-issuer-url=\K(?=\")|$OIDC_ISSUER_URL|" "/etc/kubernetes/manifests/kube-apiserver.yaml"
+    perl -pi -e "s|--oidc-client-id=\K(?=\")|$OIDC_CLIENT_ID| || s|--oidc-issuer-url=\K(?=\")|$OIDC_ISSUER_URL| || s|--oidc-username-claim=\K(?=\")|$OIDC_USERNAME_CLAIM|" "/etc/kubernetes/manifests/kube-apiserver.yaml"
 {{else}}
     sed -i "/--oidc-client-id\|--oidc-issuer-url\|--oidc-username-claim/d" "/etc/kubernetes/manifests/kube-apiserver.yaml"
 {{end}}

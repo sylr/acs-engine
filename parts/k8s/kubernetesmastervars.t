@@ -88,6 +88,7 @@
 {{if .HasAadProfile}}
     "aadServerAppId": "[parameters('aadServerAppId')]",
     "aadTenantId": "[parameters('aadTenantId')]",
+    "aadUsernameClaim": "[parameters('aadUsernameClaim')]",
 {{end}}
 {{if not IsHostedMaster}}
   {{if GetClassicMode}}

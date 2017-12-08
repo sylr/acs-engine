@@ -17,13 +17,15 @@ Follow the [deployment steps](kubernetes.md#deployment). In step #4, add the fol
 "aadProfile": {
     "serverAppID": "",
     "clientAppID": "",
-    "tenantID": ""
+    "tenantID": "",
+    "usernameClaim": ""
 }
 ```
 
 - `serverAppID`   : the `Server Application`'s ID
 - `clientAppID`   : the `Client Application`'s ID
 - `tenantID`      : (optional) the `AAD tenant`'s ID. If not specified, will use the tenant of the deployment subscription.
+- `usernameClaim` : OIDC Username Claim
 
 After template generation, the local generated kubeconfig file (`_output/<instance>/kubeconfig/kubeconfig.<location>.json`) will have the default user using AAD.
 Initially it isn't assoicated with any AAD user yet. To get started, try any kubectl command (like `kubectl get pods`), and you'll be prompted to the device login process. After login, you will be able to operate the cluster using your AAD identity.
