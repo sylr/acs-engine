@@ -137,7 +137,7 @@ func AcceleratedNetworkingSupported(sku string) bool {
 		"Standard_D64_v3", "Standard_D64s_v3", "Standard_E64_v3", "Standard_E64s_v3", "Standard_E64-16s_v3",
 		"Standard_E64-32s_v3", "Standard_F64s_v2", "Standard_F72s_v2", "Standard_M128s", "Standard_M128ms",
 		"Standard_L8s_v2", "Standard_L16s_v2", "Standard_L32s_v2", "Standard_L64s_v2", "Standard_L96s_v2",
-		"SQLGL", "SQLGLCore", "Standard_D4_v3", "Standard_D4s_v3", "Standard_D2_v2", "Standard_DS2_v2",
+		"SQLGL", "SQLGLCore", "Standard_D4_v3", "Standard_D4s_v3", "Standard_D2s", "Standard_D2_v2", "Standard_DS2_v2", "Standard_D2s_v3",
 		"Standard_E4_v3", "Standard_E4s_v3", "Standard_F2", "Standard_F2s", "Standard_F4s_v2",
 		"Standard_D11_v2", "Standard_DS11_v2", "AZAP_Performance_ComputeV17C", "Standard_PB6s",
 		"Standard_PB12s", "Standard_PB24s":
