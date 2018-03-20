@@ -260,7 +260,7 @@
 {{end}}
       ],
       "location": "[variables('location')]",
-      "name": "[concat(variables('masterVMNamePrefix'), 'nic-', copyIndex(variables('masterOffset')))]",
+      "name": "[concat(variables('masterVMNamePrefix'), copyIndex(variables('masterOffset')), '-nic0')]",
       "properties": {
         "ipConfigurations": [
           {
@@ -350,7 +350,7 @@
   {{end}}
         ],
         "location": "[variables('location')]",
-        "name": "[concat(variables('masterVMNamePrefix'), 'nic-', copyIndex(variables('masterOffset')))]",
+        "name": "[concat(variables('masterVMNamePrefix'), copyIndex(variables('masterOffset')), '-nic0')]",
         "properties": {
           "ipConfigurations": [
             {
@@ -733,6 +733,7 @@
       "tags":
       {
         "creationSource" : "[concat(parameters('generatorCode'), '-', variables('masterVMNamePrefix'), copyIndex(variables('masterOffset')))]",
+        "clusterName" : "[variables('clusterName')]",
         "resourceNameSuffix" : "[parameters('nameSuffix')]",
         "orchestrator" : "[variables('orchestratorNameVersionTag')]",
         "acsengineVersion" : "[parameters('acsengineVersion')]",

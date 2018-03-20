@@ -53,6 +53,7 @@ type ContainerService struct {
 // Properties represents the ACS cluster definition
 type Properties struct {
 	ClusterID               string
+	Name                    string                   `json:"clusterName,omitempty"`
 	ProvisioningState       ProvisioningState        `json:"provisioningState,omitempty"`
 	OrchestratorProfile     *OrchestratorProfile     `json:"orchestratorProfile,omitempty"`
 	MasterProfile           *MasterProfile           `json:"masterProfile,omitempty"`
@@ -782,9 +783,9 @@ func (p *Properties) GetAgentVMPrefix(a *AgentPoolProfile) string {
 		if a.IsWindows() {
 			vmPrefix = nameSuffix[:5] + p.K8sOrchestratorName() + strconv.Itoa(900+index)
 		} else {
-			vmPrefix = p.K8sOrchestratorName() + "-" + a.Name + "-" + nameSuffix + "-"
+			vmPrefix = p.Name + "-" + a.Name + "-"
 			if a.IsVirtualMachineScaleSets() {
-				vmPrefix += "vmss"
+				vmPrefix += "vmss-"
 			}
 		}
 	}
@@ -793,36 +794,35 @@ func (p *Properties) GetAgentVMPrefix(a *AgentPoolProfile) string {
 
 // GetMasterVMPrefix returns the prefix of master VMs
 func (p *Properties) GetMasterVMPrefix() string {
-	return p.K8sOrchestratorName() + "-master-" + p.GetClusterID() + "-"
+	return p.Name + "-master-"
 }
 
 // GetResourcePrefix returns the prefix to use for naming cluster resources
 func (p *Properties) GetResourcePrefix() string {
 	if p.IsHostedMasterProfile() {
-		return p.K8sOrchestratorName() + "-agentpool-" + p.GetClusterID() + "-"
+		return p.Name + "-agentpool-"
 	}
-	return p.K8sOrchestratorName() + "-master-" + p.GetClusterID() + "-"
-
+	return p.Name + "-master-"
 }
 
 // GetRouteTableName returns the route table name of the cluster.
 func (p *Properties) GetRouteTableName() string {
-	return p.GetResourcePrefix() + "routetable"
+	return p.Name + "-routetable"
 }
 
 // GetNSGName returns the name of the network security group of the cluster.
 func (p *Properties) GetNSGName() string {
-	return p.GetResourcePrefix() + "nsg"
+	return p.Name + "-nsg"
 }
 
 // GetPrimaryAvailabilitySetName returns the name of the primary availability set of the cluster
 func (p *Properties) GetPrimaryAvailabilitySetName() string {
-	return p.AgentPoolProfiles[0].Name + "-availabilitySet-" + p.GetClusterID()
+	return p.Name + "-" + p.AgentPoolProfiles[0].Name + "-availabilityset"
 }
 
 // GetPrimaryScaleSetName returns the name of the primary scale set node of the cluster
 func (p *Properties) GetPrimaryScaleSetName() string {
-	return p.K8sOrchestratorName() + "-" + p.AgentPoolProfiles[0].Name + "-" + p.GetClusterID() + "-vmss"
+	return p.Name + "-" + p.AgentPoolProfiles[0].Name + "-vmss"
 }
 
 // IsHostedMasterProfile returns true if the cluster has a hosted master
@@ -849,7 +849,7 @@ func (p *Properties) GetVirtualNetworkName() string {
 	} else if !p.IsHostedMasterProfile() && p.MasterProfile.IsCustomVNET() {
 		vnetName = strings.Split(p.MasterProfile.VnetSubnetID, "/")[DefaultVnetNameResourceSegmentIndex]
 	} else {
-		vnetName = p.K8sOrchestratorName() + "-vnet-" + p.GetClusterID()
+		vnetName = p.Name + "-vnet"
 	}
 	return vnetName
 }
@@ -861,13 +861,13 @@ func (p *Properties) GetSubnetName() string {
 		if p.AreAgentProfilesCustomVNET() {
 			subnetName = strings.Split(p.AgentPoolProfiles[0].VnetSubnetID, "/")[DefaultSubnetNameResourceSegmentIndex]
 		} else {
-			subnetName = p.K8sOrchestratorName() + "-subnet"
+			subnetName = p.Name + "-subnet"
 		}
 	} else {
 		if p.MasterProfile.IsCustomVNET() {
 			subnetName = strings.Split(p.MasterProfile.VnetSubnetID, "/")[DefaultSubnetNameResourceSegmentIndex]
 		} else {
-			subnetName = p.K8sOrchestratorName() + "-subnet"
+			subnetName = p.Name + "-subnet"
 		}
 	}
 	return subnetName
