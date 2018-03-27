@@ -609,7 +609,7 @@
       "tags":
       {
         "creationSource" : "[concat(variables('generatorCode'), '-', variables('masterVMNamePrefix'), copyIndex(variables('masterOffset')))]",
-        "resourceNameSuffix" : "[variables('nameSuffix')]",
+        "clusterName" : "[variables('clusterName')]",
         "orchestrator" : "[variables('orchestratorNameVersionTag')]",
         "poolName" : "master"
       },
