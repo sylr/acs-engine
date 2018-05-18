@@ -25,6 +25,7 @@
       "location": "[variables('location')]",
       "name": "[concat(variables('{{.Name}}VMNamePrefix'), copyIndex(variables('{{.Name}}Offset')), '-nic0')]",
       "properties": {
+        "enableAcceleratedNetworking" : true,
 {{if not IsOpenShift}}
 {{if .IsCustomVNET}}
         "networkSecurityGroup": {
