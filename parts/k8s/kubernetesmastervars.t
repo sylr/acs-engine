@@ -177,7 +177,7 @@
   {{end}}
     "masterOffset": "[parameters('masterOffset')]",
 {{end}}
-    "apiVersionDefault": "2016-03-30",
+    "apiVersionDefault": "2016-09-01",
     "apiVersionLinkDefault": "2015-01-01",
     "locations": [
          "[resourceGroup().location]",
