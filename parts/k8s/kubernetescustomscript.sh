@@ -50,7 +50,7 @@ fi
 if $FULL_INSTALL_REQUIRED; then
     holdWALinuxAgent
     installDeps
-else 
+else
     echo "Golden image; skipping dependencies installation"
 fi
 
@@ -106,7 +106,7 @@ if [[ ! -z "${MASTER_NODE}" ]]; then
     ensureK8sControlPlane
     # workaround for 1.12 bug https://github.com/Azure/acs-engine/issues/3681
     if [[ "${KUBERNETES_VERSION}" = 1.12.* ]]; then
-        ensureKubelet 
+        ensureKubelet
     fi
 fi
 
