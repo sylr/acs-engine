@@ -9,7 +9,7 @@
 {{end}}
 {{if .IsAvailabilitySets}}
     "{{.Name}}Offset": "[parameters('{{.Name}}Offset')]",
-    "{{.Name}}AvailabilitySet": "[concat(variables('clusterName'), '-{{.Name}}-availabilityset')]",
+    "{{.Name}}AvailabilitySet": "[concat(parameters('clusterName'), '-{{.Name}}-availabilityset')]",
 {{else}}
     {{if .IsLowPriorityScaleSet}}
     "{{.Name}}ScaleSetPriority": "[parameters('{{.Name}}ScaleSetPriority')]",

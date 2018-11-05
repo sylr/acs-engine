@@ -229,7 +229,7 @@
     "masterFirstAddrOctets": "[split(parameters('firstConsecutiveStaticIP'),'.')]",
     "masterFirstAddrOctet4": "[variables('masterFirstAddrOctets')[3]]",
     "masterFirstAddrPrefix": "[concat(variables('masterFirstAddrOctets')[0],'.',variables('masterFirstAddrOctets')[1],'.',variables('masterFirstAddrOctets')[2],'.')]",
-    "masterVMNamePrefix": "[concat(variable('clusterName'), '-master-')]",
+    "masterVMNamePrefix": "[concat(parameters('clusterName'), '-master-')]",
     "masterVMNames": [
       "[concat(variables('masterVMNamePrefix'), 'vmss-000000')]",
       "[concat(variables('masterVMNamePrefix'), 'vmss-000001')]",
