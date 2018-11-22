@@ -1,4 +1,5 @@
 {{if .MasterProfile.IsManagedDisks}}
+    {{if not .MasterProfile.HasAvailabilityZones}}
     {
       "apiVersion": "[variables('apiVersionCompute')]",
       "location": "[variables('location')]",
@@ -13,7 +14,9 @@
       },
       "type": "Microsoft.Compute/availabilitySets"
     },
+    {{end}}
 {{else if .MasterProfile.IsStorageAccount}}
+    {{if not .MasterProfile.HasAvailabilityZones}}
     {
       "apiVersion": "[variables('apiVersionCompute')]",
       "location": "[variables('location')]",
@@ -21,6 +24,7 @@
       "properties": {},
       "type": "Microsoft.Compute/availabilitySets"
     },
+    {{end}}
     {
       "apiVersion": "[variables('apiVersionStorage')]",
 {{if not IsPrivateCluster}}
@@ -150,7 +154,10 @@
         "dnsSettings": {
           "domainNameLabel": "[variables('masterFqdnPrefix')]"
         },
-        "publicIPAllocationMethod": "Dynamic"
+        "publicIPAllocationMethod": "Static"
+      },
+      "sku": {
+        "name": "[variables('loadBalancerSku')]"
       },
       "type": "Microsoft.Network/publicIPAddresses"
     },
@@ -210,6 +217,9 @@
             }
           }
         ]
+      },
+      "sku": {
+        "name": "[variables('loadBalancerSku')]"
       },
       "type": "Microsoft.Network/loadBalancers"
     },
@@ -619,6 +629,9 @@
           }
         ]
       },
+      "sku": {
+        "name": "[variables('loadBalancerSku')]"
+      },
       "type": "Microsoft.Network/loadBalancers"
     },
 {{end}}
@@ -666,7 +679,7 @@
          "tenantId": "[variables('tenantID')]",
  {{if UseManagedIdentity}}
     {{if UserAssignedIDEnabled}}
-        "accessPolicies": 
+        "accessPolicies":
         [
           {
             "tenantId": "[variables('tenantID')]",
@@ -742,7 +755,9 @@
       },
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/', variables('masterVMNamePrefix'), copyIndex(variables('masterOffset')), '-nic')]"
+        {{if not .MasterProfile.HasAvailabilityZones}}
         ,"[concat('Microsoft.Compute/availabilitySets/',variables('masterAvailabilitySet'))]"
+        {{end}}
 {{if .MasterProfile.IsStorageAccount}}
         ,"[variables('masterStorageAccountName')]"
 {{end}}
@@ -758,6 +773,9 @@
       },
       "location": "[variables('location')]",
       "name": "[concat(variables('masterVMNamePrefix'), copyIndex(variables('masterOffset')))]",
+      {{if .MasterProfile.HasAvailabilityZones}}
+      "zones": "[split(string(parameters('availabilityZones')[mod(copyIndex(variables('masterOffset')), length(parameters('availabilityZones')))]), ',')]",
+      {{end}}
       {{if UseManagedIdentity}}
       {{if UserAssignedIDEnabled}}
       "identity": {
@@ -780,9 +798,11 @@
       },
       {{end}}
       "properties": {
+        {{if not .MasterProfile.HasAvailabilityZones}}
         "availabilitySet": {
           "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('masterAvailabilitySet'))]"
         },
+        {{end}}
         "hardwareProfile": {
           "vmSize": "[parameters('masterVMSize')]"
         },
